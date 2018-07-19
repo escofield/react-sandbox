@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Provider } from "react-redux";
+import { createStore } from 'redux'
 import {
   Route,
   NavLink,
@@ -7,25 +9,32 @@ import {
 import Home from "./Home";
 import Stuff from "./Stuff";
 import Contact from "./Contact";
+import Login from "./login"
+import rootReducer from './reducers'
+
+const store = createStore(rootReducer)
 
 class Main extends Component {
   render() {
     return (
-      <HashRouter>
-        <div>
-          <h1>Simple SPA</h1>
-          <ul className="header">
-            <li><NavLink to="/">Home</NavLink></li>
-            <li><NavLink to="/stuff">Stuff</NavLink></li>
-            <li><NavLink to="/contact">Contact</NavLink></li>
-          </ul>
-          <div className="content">
-            <Route exact path="/" component={Home}/>
-            <Route path="/stuff" component={Stuff}/>
-            <Route path="/contact" component={Contact}/>
+      <Provider store={store}>
+        <HashRouter>
+          <div>
+            <ul className="header">
+              <li><NavLink exact to="/">Home</NavLink></li>
+              <li><NavLink to="/stuff">Stuff</NavLink></li>
+              <li><NavLink to="/contact">Contact</NavLink></li>
+              <li><NavLink to="/login">Login</NavLink></li>
+            </ul>
+            <div className="content">
+              <Route exact path="/" component={Home}/>
+              <Route path="/stuff" component={Stuff}/>
+              <Route path="/contact" component={Contact}/>
+              <Route path="/login" component={Login}/>
+            </div>
           </div>
-        </div>
-      </HashRouter>
+        </HashRouter>
+      </Provider>
     );
   }
 }
